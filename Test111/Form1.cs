@@ -31,7 +31,7 @@ namespace Test111
         string dateto;
         private void Form1_Load(object sender, EventArgs e)
         {
-            ClientUtils.ServerUrl = "http://10.171.16.201:8090/WCF_RemoteObject";
+            ClientUtils.ServerUrl = "http://10.171.16.57:8090/WCF_RemoteObject";
             //ClientUtils.ServerUrl = string.Format("http://{0}:8090/WCF_RemoteObject", ConfigurationManager.AppSettings["AP"]);
         }
 
