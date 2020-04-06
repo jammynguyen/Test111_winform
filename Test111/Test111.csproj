@@ -33,25 +33,59 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ClientUtils">
-      <HintPath>D:\PPS HMI\ClientUtils.dll</HintPath>
+    <Reference Include="BarcodeLib">
+      <HintPath>..\..\..\PPS TEST\Shipping\BarcodeLib.dll</HintPath>
+    </Reference>
+    <Reference Include="ClientUtils, Version=1.0.0.29, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\PPS TEST\ClientUtils.dll</HintPath>
+    </Reference>
+    <Reference Include="CRReport">
+      <HintPath>..\..\..\PPS TEST\CRReport.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetBarcode">
+      <HintPath>..\..\..\PPS TEST\DotNetBarcode.dll</HintPath>
     </Reference>
     <Reference Include="itextsharp, Version=5.5.13.1, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
       <HintPath>..\packages\iTextSharp.5.5.13.1\lib\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="LibHelper">
+      <HintPath>..\..\..\PPS TEST\LibHelper.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\PPS TEST\Microsoft.Office.Interop.Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\PPS TEST\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Oracle.ManagedDataAccess, Version=4.122.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>D:\PPS HMI\Oracle.ManagedDataAccess.dll</HintPath>
     </Reference>
+    <Reference Include="Spire.License">
+      <HintPath>..\..\..\PPS TEST\Spire.License.dll</HintPath>
+    </Reference>
+    <Reference Include="Spire.Pdf">
+      <HintPath>..\..\..\PPS TEST\Spire.Pdf.dll</HintPath>
+    </Reference>
+    <Reference Include="Spire.XLS, Version=10.3.0.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Spire.XLS.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Runtime.Extensions, Version=4.1.1.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.Extensions.4.3.1\lib\net462\System.Runtime.Extensions.dll</HintPath>
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -63,17 +97,54 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Controller.cs" />
     <Compile Include="DAO.cs" />
+    <Compile Include="Dao\SelectData.cs" />
+    <Compile Include="Entitys\AutoModifyForm.cs" />
+    <Compile Include="Entitys\ExecuteResult.cs" />
+    <Compile Include="Entitys\LabelInfo.cs" />
+    <Compile Include="Entitys\ShipmentInfo.cs" />
+    <Compile Include="Entitys\T940UnicodeInfo.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Print.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Print.Designer.cs">
+      <DependentUpon>Print.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Printer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Printer.designer.cs">
+      <DependentUpon>Printer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reprint.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reprint.designer.cs">
+      <DependentUpon>Reprint.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\CreateBarcodeForShippingLabel.cs" />
+    <Compile Include="Utils\PrintLabel.cs" />
+    <Compile Include="Utils\WriteAndReadUtil.cs" />
+    <Compile Include="Wcf\Credentials.cs" />
+    <Compile Include="Wcf\shipRequeset.cs" />
+    <Compile Include="Web References\UpsWcf\Reference.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Print.resx">
+      <DependentUpon>Print.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Printer.resx">
+      <DependentUpon>Printer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -84,6 +155,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Reprint.resx">
+      <DependentUpon>Reprint.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -94,6 +168,11 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Web References\UpsWcf\ICTToCarrierService.wsdl" />
+    <None Include="Web References\UpsWcf\ICTToCarrierService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\UpsWcf\Reference.map" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

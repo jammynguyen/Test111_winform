@@ -1,6 +1,7 @@
 ﻿using iTextSharp.text;
 using iTextSharp.text.pdf;
 using Oracle.ManagedDataAccess.Client;
+using Spire.Xls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,14 +15,22 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-
-
+using Test111.Core;
+using Test111.Entitys;
+using Test111.Utils;
 
 namespace Test111
 {
-    public partial class Form1 : Form
+    public partial class fMain : Form
     {
-        public Form1()
+        private Controller controller;
+        private bool isMix = false;
+        private bool isCartonType = false;
+        private CreateBarcodeForShippingLabel createBarcodes;
+        private ShipmentInfo shipmentInfo;
+        private double saveDays = 90;
+        public static string Printer = "";
+        public fMain()
         {
             InitializeComponent();
         }
@@ -31,7 +40,7 @@ namespace Test111
         string dateto;
         private void Form1_Load(object sender, EventArgs e)
         {
-            ClientUtils.ServerUrl = "http://10.171.16.57:8090/WCF_RemoteObject";
+            ClientUtils.ServerUrl = "http://10.171.16.201:8090/WCF_RemoteObject";
             //ClientUtils.ServerUrl = string.Format("http://{0}:8090/WCF_RemoteObject", ConfigurationManager.AppSettings["AP"]);
         }
 
@@ -194,7 +203,7 @@ namespace Test111
             object[][] param = new object[2][];
             //DataTable dt = new DataTable();
             string sql = @"select SHIPMENT_ID,CARRIER_NAME,POE,HAWB,SHIPMENT_TYPE,REGION,QTY from t_shipment_info where cdt between to_date(:datefrom,'YYYY/MM/DD HH24:MI:SS') and to_date(:dateto,'YYYY/MM/DD HH24:MI:SS')";
-            if(dtpStart.Value>dtpEnd.Value)
+            if (dtpEnd.Value.Date < dtpStart.Value.Date)
             {
                 MessageBox.Show("The start time cannot greater than the end time, pls fix again");
             }
@@ -203,13 +212,21 @@ namespace Test111
                 param[0] = new object[] { ParameterDirection.Input, OracleDbType.Varchar2, "datefrom", datefrom };
                 param[1] = new object[] { ParameterDirection.Input, OracleDbType.Varchar2, "dateto", dateto };
                 DataTable dt = ClientUtils.ExecuteSQL(sql, param).Tables[0];
-                dtgrw_ShipmentInfo.DataSource = dt;
-                cmbShipment.Text = dt.Rows[0]["SHIPMENT_ID"].ToString();
-                for (int i = 1; i < dt.Rows.Count; i++)
+                if (dt.Rows.Count > 0)
                 {
-                    //DataGridViewRow dr = new DataGridViewRow();
-                    cmbShipment.Items.Add(dt.Rows[i]["SHIPMENT_ID"].ToString());
+                    dtgrw_ShipmentInfo.DataSource = dt;
+                    cmbShipment.Text = dt.Rows[0]["SHIPMENT_ID"].ToString();
+                    for (int i = 1; i < dt.Rows.Count; i++)
+                    {
+                        //DataGridViewRow dr = new DataGridViewRow();
+                        cmbShipment.Items.Add(dt.Rows[i]["SHIPMENT_ID"].ToString());
+                    }
                 }
+                else
+                {
+                    MessageBox.Show("No shipment Found");
+                }
+                
             }
           
             //DataTable dt = dts.Tables[0];
@@ -314,17 +331,45 @@ namespace Test111
                 MessageBox.Show("Pls Input Shipment ID");
             }
             else 
-            { 
-            DAO inx = new DAO();
-            string strinsert = inx.insertData(txtShipment.Text.Trim(), cmbStatus.Text.Trim());
-            MessageBox.Show("execution OK...");
+            {
+                if(cmbStatus.Text.Trim()=="ALL")
+                {
+                    check_all(txtShipment.Text.Trim());
+                }
+                else
+                {
+                    grdvw_SN_data.DataSource = null;
+                    DAO inx = new DAO();
+                    string strinsert = inx.insertData(txtShipment.Text.Trim(), cmbStatus.Text.Trim(), "");
+                    //MessageBox.Show("execution OK...");
+                    //grdvw_SN_data.Rows.Clear();
 
-            string sql = @"select * from PPS_OPERATE_DATA_TOTAL where shipment=:shipment_id and wc=:wc order by carton_no";
-            object[][] param1 = new object[2][];
-            param1[0] = new object[] { ParameterDirection.Input, OracleDbType.Varchar2, "shipment_id", txtShipment.Text.Trim() };
-            param1[1] = new object[] { ParameterDirection.Input, OracleDbType.Varchar2, "wc", cmbStatus.Text.Trim() };
-            DataTable dt2 = ClientUtils.ExecuteSQL(sql, param1).Tables[0];
-                grdvw_SN_data.DataSource = dt2;
+                    string sql = @"select carton_no,
+                           shipment_id,
+                           part_no,
+                           pick_pallet_no,
+                           sscc,
+                           pack_pallet_no,
+                           TRACKING_NO,
+                           BABYTRACKING_NO,
+                           location_no,
+                           delivery_no,
+                           pallet_no,
+                           COO,
+                           wc from PPS_OPERATE_DATA_TOTAL where shipment=:shipment_id and wc=:wc order by pallet_no";
+                    object[][] param1 = new object[2][];
+                    param1[0] = new object[] { ParameterDirection.Input, OracleDbType.Varchar2, "shipment_id", txtShipment.Text.Trim() };
+                    param1[1] = new object[] { ParameterDirection.Input, OracleDbType.Varchar2, "wc", cmbStatus.Text.Trim() };
+                    DataTable dt2 = ClientUtils.ExecuteSQL(sql, param1).Tables[0]; 
+                    if (dt2.Rows.Count > 0)
+                    {
+                        grdvw_SN_data.DataSource = dt2;
+                    }
+                    else
+                    {
+                        MessageBox.Show("No data found");
+                    }
+                }
 
             }
 
@@ -407,6 +452,213 @@ namespace Test111
             {
                 MessageBox.Show("Pls input the carton no in the blank first");
             }
+        }
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+           Application.Exit();
+        }
+
+        public void check_all(string p_shipment_id)
+        {
+
+           grdvw_SN_data.DataSource = null;
+                string sqlCheckall = @"SELECT DISTINCT a.carton_no,
+                           b.shipment_id,
+                           a.part_no,
+                           a.pick_pallet_no,
+                           a.sscc,
+                           a.pack_pallet_no,
+                           A.TRACKING_NO,
+                           A.BABYTRACKING_NO,
+                           a.location_no,
+                           b.delivery_no,
+                           d.pallet_no,
+                           D.COO,
+                           a.wc
+                     
+                                 --a.customer_no
+                                 FROM t_sn_status a
+                           INNER JOIN t_order_info b ON a.part_no = b.ictpn 
+                           --inner join t_trolley_sn_status c
+                           --on b.delivery_no=c.delivery_no
+                           INNER JOIN t_pallet_order d
+                              ON     b.shipment_id = d.shipment_id
+                                 AND b.ictpn = d.ictpn
+                                 AND a.coo = d.coo and b.mpn=d.mpn
+                                 AND b.delivery_no = d.delivery_no and b.line_item=d.line_item --and A.PALLET_NO = D.PALLET_NO
+                               INNER JOIN t_shipment_pallet e
+                                      ON d.pallet_no = e.pallet_no AND 
+                                      d.shipment_id = e.shipment_id
+                                WHERE b.shipment_id = :shipment_id  ORDER BY a.wc";
+                object[][] param1 = new object[1][];
+                param1[0] = new object[] { ParameterDirection.Input, OracleDbType.Varchar2, "shipment_id", p_shipment_id };
+                //param[1] = new object[] { ParameterDirection.Input, OracleDbType.Varchar2, "dateto", dateto };
+                DataSet ds1 = ClientUtils.ExecuteSQL(sqlCheckall, param1);
+                if (ds1.Tables[0].Rows.Count < 1)
+                {
+                    MessageBox.Show("No data found!");
+                }
+                else
+                {
+                    grdvw_SN_data.DataSource = ds1.Tables[0];
+                }
+            
+        }
+        private void btn_CheckAll_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn_Reprint_Click(object sender, EventArgs e)
+        {
+            Reprint rp = new Reprint();
+            rp.ShowDialog();
+        }
+
+        private void btn_exportExcel_Click(object sender, EventArgs e)
+        {
+
+            btn_exportExcel.Enabled = false;
+            if (grdvw_SN_data.Rows.Count > 1)
+            {
+
+                // creating Excel Application  
+                Microsoft.Office.Interop.Excel._Application app = new Microsoft.Office.Interop.Excel.Application();
+                // creating new WorkBook within Excel application  
+                Microsoft.Office.Interop.Excel._Workbook workbook = app.Workbooks.Add(Type.Missing);
+                // creating new Excelsheet in workbook  
+                Microsoft.Office.Interop.Excel._Worksheet worksheet = null;
+                // see the excel sheet behind the program  
+                Microsoft.Office.Interop.Excel.Range aRange;
+                //app.Visible = true;
+                // get the reference of first sheet. By default its name is Sheet1.  
+                // store its reference to worksheet  
+                worksheet = workbook.Sheets["Sheet1"];
+                worksheet = workbook.ActiveSheet;
+
+                // changing the name of active sheet  
+                //worksheet.Name = "Exported from gridview";
+                //worksheet.AllocatedRange.AutoFitColumns();
+                //worksheet.AllocatedRange.AutoFitRows();
+                // storing header part in Excel  
+
+                SaveFileDialog sfd = new SaveFileDialog();
+                sfd.Filter = "XLS (*.xlsx)|*.xlsx";
+                sfd.FileName = "Output.xlsx";
+                //string filename1 = @"D:\temp\test.csv";
+                bool fileError = false;
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    if (File.Exists(sfd.FileName))
+                    {
+                        try
+                        {
+                            File.Delete(sfd.FileName);
+                        }
+                        catch (IOException ex)
+                        {
+                            fileError = true;
+                            MessageBox.Show("It wasn't possible to write the data to the disk." + ex.Message);
+                        }
+                    }
+                }
+                if (!fileError)
+                {
+                    try
+                    {
+                        string CsvFpath = sfd.FileName;
+                        for (int l = 1; l < grdvw_SN_data.Columns.Count + 1; l++)
+                        {
+                            worksheet.Cells[1, l] = grdvw_SN_data.Columns[l - 1].HeaderText;
+                        }
+                        int i = 0, j = 0;
+                        // storing Each row and column value to excel sheet  
+                        for (i = 0; i < grdvw_SN_data.Rows.Count - 1; i++)
+                        {
+                            for (j = 0; j < grdvw_SN_data.Columns.Count; j++)
+                            {
+                                //app.Range["G"].NumberFormat =
+                                app.Range["A" + (i + 2)].NumberFormat = "@";
+                                app.Range["E" + (i + 2)].NumberFormat = "@";
+                                app.Range["F" + (i + 2)].NumberFormat = "0";
+                                app.Range["G" + (i + 2)].NumberFormat = "@";
+                                app.Range["J" + (i + 2)].NumberFormat = "0";
+                                app.Range["K" + (i + 2)].NumberFormat = "@";
+
+                                worksheet.Cells[i + 2, j + 1] = grdvw_SN_data.Rows[i].Cells[j].Value.ToString();
+
+                            }
+                        }
+                        aRange = worksheet.get_Range("A2", "N" + (i + 1));
+
+                        aRange.Columns.AutoFit();
+                        // CellRange cRange = worksheet.Range[]
+                        aRange.Borders.LineStyle = LineStyleType.Dashed;
+                        //aRange.Borders[BordersLineType.DiagonalDown].LineStyle = LineStyleType.None;
+                        //aRange.Borders[BordersLineType.DiagonalUp].LineStyle = LineStyleType.None;
+
+
+                        // save the application  
+                        workbook.SaveAs(CsvFpath, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlExclusive, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+                        // Exit from the application  
+                        MessageBox.Show("Data Exported Successfully !!!", "Info");
+
+
+                        app.Quit();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error :" + ex.Message);
+                    }
+                }
+
+            }
+            else
+            {
+                MessageBox.Show("No Record To Export !!!", "Info");
+            }
+
+            btn_exportExcel.Enabled = true;
+        }
+
+        private void btn_shipmentsearch_Click(object sender, EventArgs e)
+        {
+            dtgrw_ShipmentInfo.DataSource = null;
+
+            object[][] param = new object[1][];
+            //DataTable dt = new DataTable();
+            string sql = @"select SHIPMENT_ID,CARRIER_NAME,POE,HAWB,SHIPMENT_TYPE,REGION,QTY from t_shipment_info where shipment_id=:shipment_id";
+            if (string.IsNullOrEmpty(cmbShipment.Text.Trim()))
+            {
+                MessageBox.Show("Nhập vào shipment ID để tìm kiếm");
+            }
+            else
+            {
+                param[0] = new object[] { ParameterDirection.Input, OracleDbType.Varchar2, "shipment_id", cmbShipment.Text.Trim() };
+                //param[1] = new object[] { ParameterDirection.Input, OracleDbType.Varchar2, "dateto", dateto };
+                DataTable dt = ClientUtils.ExecuteSQL(sql, param).Tables[0];
+                if (dt.Rows.Count > 0)
+                {
+                    dtgrw_ShipmentInfo.DataSource = dt;
+                    //cmbShipment.Text = dt.Rows[0]["SHIPMENT_ID"].ToString();
+                    //for (int i = 1; i < dt.Rows.Count; i++)
+                    //{
+                    //    //DataGridViewRow dr = new DataGridViewRow();
+                    //    cmbShipment.Items.Add(dt.Rows[i]["SHIPMENT_ID"].ToString());
+                    //}
+                }
+                else
+                {
+                    MessageBox.Show("No shipment Found");
+                }
+
+            }
+        }
+
+        private void btn_close_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }
