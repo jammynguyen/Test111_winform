@@ -43,8 +43,88 @@
     <Reference Include="CRReport">
       <HintPath>..\..\..\PPS TEST\CRReport.dll</HintPath>
     </Reference>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\PPS TEST\Shipping\CrystalDecisions.CrystalReports.Engine.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportAppServer.ClientDoc, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\PPS TEST\Shipping\CrystalDecisions.ReportAppServer.ClientDoc.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportAppServer.CommLayer, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\PPS TEST\Shipping\CrystalDecisions.ReportAppServer.CommLayer.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportAppServer.CommonControls, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\PPS TEST\Shipping\CrystalDecisions.ReportAppServer.CommonControls.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportAppServer.CommonObjectModel, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\PPS TEST\Shipping\CrystalDecisions.ReportAppServer.CommonObjectModel.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportAppServer.Controllers, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\PPS TEST\Shipping\CrystalDecisions.ReportAppServer.Controllers.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportAppServer.CubeDefModel, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\PPS TEST\Shipping\CrystalDecisions.ReportAppServer.CubeDefModel.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportAppServer.DataDefModel, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\PPS TEST\Shipping\CrystalDecisions.ReportAppServer.DataDefModel.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportAppServer.DataSetConversion, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\PPS TEST\Shipping\CrystalDecisions.ReportAppServer.DataSetConversion.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportAppServer.ObjectFactory, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\PPS TEST\Shipping\CrystalDecisions.ReportAppServer.ObjectFactory.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportAppServer.Prompting, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\PPS TEST\Shipping\CrystalDecisions.ReportAppServer.Prompting.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportAppServer.ReportDefModel, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\PPS TEST\Shipping\CrystalDecisions.ReportAppServer.ReportDefModel.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportAppServer.XmlSerialize, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\PPS TEST\Shipping\CrystalDecisions.ReportAppServer.XmlSerialize.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\PPS TEST\Shipping\CrystalDecisions.ReportSource.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\PPS TEST\Shipping\CrystalDecisions.Shared.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.Windows.Forms, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\PPS TEST\Shipping\CrystalDecisions.Windows.Forms.dll</HintPath>
+    </Reference>
     <Reference Include="DotNetBarcode">
       <HintPath>..\..\..\PPS TEST\DotNetBarcode.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.BarTender, Version=9.40.2.1, Culture=neutral, PublicKeyToken=109ff779a1b4cbc7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>C:\Windows\assembly\GAC_MSIL\Interop.BarTender\9.40.2.1__109ff779a1b4cbc7\Interop.BarTender.dll</HintPath>
     </Reference>
     <Reference Include="itextsharp, Version=5.5.13.1, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
       <HintPath>..\packages\iTextSharp.5.5.13.1\lib\itextsharp.dll</HintPath>
@@ -64,6 +144,10 @@
     <Reference Include="Oracle.ManagedDataAccess, Version=4.122.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>D:\PPS HMI\Oracle.ManagedDataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="Seagull.BarTender.Print, Version=9.40.2.1, Culture=neutral, PublicKeyToken=109ff779a1b4cbc7, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Windows\assembly\GAC_32\Seagull.BarTender.Print\9.40.2.1__109ff779a1b4cbc7\Seagull.BarTender.Print.dll</HintPath>
     </Reference>
     <Reference Include="Spire.License">
       <HintPath>..\..\..\PPS TEST\Spire.License.dll</HintPath>
@@ -100,22 +184,31 @@
     <Compile Include="Core\Controller.cs" />
     <Compile Include="DAO.cs" />
     <Compile Include="Dao\SelectData.cs" />
+    <Compile Include="DSPalletSheetlabel.cs" />
+    <Compile Include="DSPalletSheetlabel_multi.cs" />
     <Compile Include="Entitys\AutoModifyForm.cs" />
     <Compile Include="Entitys\ExecuteResult.cs" />
     <Compile Include="Entitys\LabelInfo.cs" />
     <Compile Include="Entitys\ShipmentInfo.cs" />
     <Compile Include="Entitys\T940UnicodeInfo.cs" />
+    <Compile Include="FileToBarCodePrint.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Print.cs">
+    <Compile Include="fPrintAll.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Print.Designer.cs">
-      <DependentUpon>Print.cs</DependentUpon>
+    <Compile Include="fPrintAll.Designer.cs">
+      <DependentUpon>fPrintAll.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fWeightPrint.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fWeightPrint.designer.cs">
+      <DependentUpon>fWeightPrint.cs</DependentUpon>
     </Compile>
     <Compile Include="Printer.cs">
       <SubType>Form</SubType>
@@ -131,17 +224,39 @@
     <Compile Include="Reprint.designer.cs">
       <DependentUpon>Reprint.cs</DependentUpon>
     </Compile>
+    <Compile Include="rePrintReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="rePrintReport.designer.cs">
+      <DependentUpon>rePrintReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RprintShipment.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RprintShipment.Designer.cs">
+      <DependentUpon>RprintShipment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SajetCommon.cs" />
+    <Compile Include="ShipmentBll.cs" />
+    <Compile Include="ShipmentDal.cs" />
+    <Compile Include="ShipmentDal2.cs" />
+    <Compile Include="Utility.cs" />
     <Compile Include="Utils\CreateBarcodeForShippingLabel.cs" />
     <Compile Include="Utils\PrintLabel.cs" />
     <Compile Include="Utils\WriteAndReadUtil.cs" />
     <Compile Include="Wcf\Credentials.cs" />
     <Compile Include="Wcf\shipRequeset.cs" />
     <Compile Include="Web References\UpsWcf\Reference.cs" />
+    <Compile Include="WeightBll.cs" />
+    <Compile Include="WeightDal.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Print.resx">
-      <DependentUpon>Print.cs</DependentUpon>
+    <EmbeddedResource Include="fPrintAll.resx">
+      <DependentUpon>fPrintAll.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fWeightPrint.resx">
+      <DependentUpon>fWeightPrint.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Printer.resx">
       <DependentUpon>Printer.cs</DependentUpon>
@@ -157,6 +272,12 @@
     </Compile>
     <EmbeddedResource Include="Reprint.resx">
       <DependentUpon>Reprint.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="rePrintReport.resx">
+      <DependentUpon>rePrintReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RprintShipment.resx">
+      <DependentUpon>RprintShipment.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

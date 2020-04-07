@@ -345,7 +345,7 @@ namespace Test111
                     //grdvw_SN_data.Rows.Clear();
 
                     string sql = @"select carton_no,
-                           shipment_id,
+                           shipment,
                            part_no,
                            pick_pallet_no,
                            sscc,
@@ -356,9 +356,9 @@ namespace Test111
                            delivery_no,
                            pallet_no,
                            COO,
-                           wc from PPS_OPERATE_DATA_TOTAL where shipment=:shipment_id and wc=:wc order by pallet_no";
+                           wc from PPS_OPERATE_DATA_TOTAL where shipment=:shipment and wc=:wc order by pallet_no";
                     object[][] param1 = new object[2][];
-                    param1[0] = new object[] { ParameterDirection.Input, OracleDbType.Varchar2, "shipment_id", txtShipment.Text.Trim() };
+                    param1[0] = new object[] { ParameterDirection.Input, OracleDbType.Varchar2, "shipment", txtShipment.Text.Trim() };
                     param1[1] = new object[] { ParameterDirection.Input, OracleDbType.Varchar2, "wc", cmbStatus.Text.Trim() };
                     DataTable dt2 = ClientUtils.ExecuteSQL(sql, param1).Tables[0]; 
                     if (dt2.Rows.Count > 0)
@@ -512,7 +512,7 @@ namespace Test111
 
         private void btn_Reprint_Click(object sender, EventArgs e)
         {
-            Reprint rp = new Reprint();
+            fPrintAll rp = new fPrintAll();
             rp.ShowDialog();
         }
 
